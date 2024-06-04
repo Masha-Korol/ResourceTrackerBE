@@ -3,8 +3,8 @@ package com.example.concert_service.data.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "resource_marks", schema = "public")
-public class ResourceMark {
+@Table(name = "user_resource_marks", schema = "public")
+public class UserResourceMark {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,15 @@ public class ResourceMark {
 
     private Integer mark;
     private Boolean isFavorite;
+
+    public UserResourceMark(User user, Resource resource, Integer mark, Boolean isFavorite) {
+        this.user = user;
+        this.resource = resource;
+        this.mark = mark;
+        this.isFavorite = isFavorite;
+    }
+
+    public UserResourceMark() {}
 
     public User getUser() {
         return user;

@@ -2,6 +2,7 @@ package com.example.concert_service.data.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,8 +14,9 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String type;
+    private ResourceType type;
     private String link;
+    private ResourceState state;
 
     @ManyToMany()
     @JoinTable(
@@ -24,9 +26,17 @@ public class Resource {
     )
     private Set<Tag> tags = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "state_id")
-    private ResourceState state;
+    @OneToMany
+    @JoinColumn(name = "comment_id")
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Integer getId() {
         return id;
@@ -44,11 +54,11 @@ public class Resource {
         this.name = name;
     }
 
-    public String getType() {
+    public ResourceType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ResourceType type) {
         this.type = type;
     }
 

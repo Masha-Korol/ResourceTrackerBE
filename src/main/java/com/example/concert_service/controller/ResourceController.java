@@ -1,7 +1,8 @@
 package com.example.concert_service.controller;
 
 import com.example.concert_service.data.dto.resource.ResourceDto;
-import com.example.concert_service.data.model.Statistics;
+import com.example.concert_service.data.model.*;
+import com.example.concert_service.service.CommentService;
 import com.example.concert_service.service.ResourceService;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -11,9 +12,39 @@ import java.util.*;
 public class ResourceController {
 
     private final ResourceService resourceService;
+    private final CommentService commentService;
 
-    public ResourceController(ResourceService resourceService) {
+    public ResourceController(ResourceService resourceService, CommentService commentService) {
         this.resourceService = resourceService;
+        this.commentService = commentService;
+    }
+
+    @GetMapping("/user/{id}")
+    public List<UserResourceMark> getAllForUser(@PathVariable Integer id){
+        return resourceService.getAllByUser(id);
+    }
+
+    @GetMapping("/by-user-tags/{id}")
+    public List<ResourceDto> getAllByUserTags(@PathVariable Integer id){
+        return resourceService.getAllByUserTags(id);
+    }
+
+    @GetMapping("/")
+    public List<ResourceDto> getAll(@RequestParam(required = false) List<Long> tagIds,
+                                    @RequestParam(required = false) String name,
+                                    @RequestParam(required = false) String type,
+                                    @RequestParam(required = false) String state){
+        return resourceService.getAll(tagIds, name, type, state);
+    }
+
+    @GetMapping("/{id}")
+    public ResourceDto getById(@PathVariable Integer id){
+        return resourceService.getById(id);
+    }
+
+    @PostMapping("/")
+    public void addComment(@RequestBody Comment comment){
+        commentService.addComment(comment);
     }
 
     @PostMapping("/")
@@ -26,9 +57,9 @@ public class ResourceController {
         resourceService.delete(id);
     }
 
-    @GetMapping("/")
-    public List<ResourceDto> getAll(){
-        return resourceService.getAll();
+    @PutMapping("/")
+    public ResourceDto editResource(@RequestBody ResourceDto resourceDto) {
+        return resourceService.edit(resourceDto);
     }
 
     @GetMapping("/mark/{id}")
@@ -36,7 +67,18 @@ public class ResourceController {
         resourceService.markResource(id, mark);
     }
 
-    public List<Statistics> getStatistics() {
-        return resourceService.getStatistics
+    @GetMapping("/fav/{id}")
+    public void addOrRemoveResourceFromFavorites(@PathVariable Integer id) {
+        resourceService.addOrRemoveResourceFromFavorites(id);
+    }
+
+    @PutMapping("/state/{id}")
+    public void changeResourceState(@PathVariable Integer id, @RequestBody ResourceState state) {
+        resourceService.changeResourceState(id, state);
+    }
+
+    @PostMapping("/tag")
+    public void addTag(@RequestBody Tag tag) {
+        resourceService.addTag(tag);
     }
 }

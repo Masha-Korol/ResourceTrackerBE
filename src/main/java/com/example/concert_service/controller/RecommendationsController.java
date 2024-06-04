@@ -1,6 +1,7 @@
 package com.example.concert_service.controller;
 
 import com.example.concert_service.data.model.Resource;
+import com.example.concert_service.data.dto.resource.ResourceCompanyRecommendation;
 import com.example.concert_service.service.RecommendationsService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,18 @@ public class RecommendationsController {
         this.recommendationsService = recommendationsService;
     }
 
-    @GetMapping("/user/{id}")
-    public List<Resource> getRecommendationsForUser(@PathVariable Integer id){
-        return recommendationsService.getRecommendationsForUser(id);
+    @GetMapping("/user")
+    public List<Resource> getRecommendationsForUser(){
+        return recommendationsService.getRecommendationsForUser();
     }
 
     @GetMapping("/resource/{id}")
     public List<Resource> getSimilarToResource(@PathVariable Integer id) {
         return recommendationsService.getSimilarToResource(id);
+    }
+
+    @GetMapping("/company/{id}")
+    public List<ResourceCompanyRecommendation> getRecommendationsByCompany(@PathVariable Integer id){
+        return recommendationsService.getRecommendationsByCompany(id);
     }
 }

@@ -35,6 +35,22 @@ public class User {
     )
     private Set<AuthorizationRole> roles;
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
     public Set<AuthorizationRole> getRoles() {
         return roles;
     }

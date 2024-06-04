@@ -12,6 +12,24 @@ public class ResourceDto {
     private ResourceType type;
     private String link;
     private Set<String> tags = new HashSet<>();
+    private Integer mark;
+    private Boolean isFavorite;
+
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public Integer getMark() {
+        return mark;
+    }
+
+    public void setMark(Integer mark) {
+        this.mark = mark;
+    }
 
     public String getName() {
         return name;

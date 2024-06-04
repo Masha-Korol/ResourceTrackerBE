@@ -9,7 +9,8 @@ public class Statistics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer timestamp;
+    private Long timestamp;
+    private UserAction action;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -19,9 +20,14 @@ public class Statistics {
     @JoinColumn(name = "resource_id")
     private Resource resource;
 
-    @ManyToOne
-    @JoinColumn(name = "action_id")
-    private UserAction action;
+    public Statistics(Long timestamp, UserAction action, User user, Resource resource) {
+        this.timestamp = timestamp;
+        this.action = action;
+        this.user = user;
+        this.resource = resource;
+    }
+
+    public Statistics() {}
 
     public Integer getId() {
         return id;
@@ -31,11 +37,11 @@ public class Statistics {
         this.id = id;
     }
 
-    public Integer getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Integer timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 

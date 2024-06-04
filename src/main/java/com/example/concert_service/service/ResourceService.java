@@ -2,48 +2,102 @@ package com.example.concert_service.service;
 
 import com.example.concert_service.data.dto.resource.ResourceDto;
 import com.example.concert_service.data.mapper.resource.ResourceCreationMapper;
-import com.example.concert_service.data.model.Resource;
-import com.example.concert_service.data.model.ResourceMark;
-import com.example.concert_service.data.model.Statistics;
-import com.example.concert_service.repository.ResourceMarkRepository;
+import com.example.concert_service.data.model.*;
+import com.example.concert_service.repository.UserResourceMarkRepository;
 import com.example.concert_service.repository.ResourceRepository;
-import com.example.concert_service.repository.StatisticsRepository;
+import com.example.concert_service.repository.TagRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Service
 public class ResourceService {
 
     private final ResourceRepository resourceRepository;
-    private final ResourceMarkRepository resourceMarkRepository;
-    private final StatisticsRepository statisticsRepository;
+    private final UserResourceMarkRepository userResourceMarkRepository;
     private final ResourceCreationMapper resourceCreationMapper;
+    private final TagRepository tagRepository;
+    private final UserService userService;
 
-    public ResourceService(ResourceRepository resourceRepository, ResourceMarkRepository resourceMarkRepository, StatisticsRepository statisticsRepository,
-                           ResourceCreationMapper resourceCreationMapper) {
+    public ResourceService(ResourceRepository resourceRepository, UserResourceMarkRepository userResourceMarkRepository,
+                           ResourceCreationMapper resourceCreationMapper, TagRepository tagRepository, UserService userService) {
         this.resourceRepository = resourceRepository;
-        this.resourceMarkRepository = resourceMarkRepository;
-        this.statisticsRepository = statisticsRepository;
+        this.userResourceMarkRepository = userResourceMarkRepository;
         this.resourceCreationMapper = resourceCreationMapper;
+        this.tagRepository = tagRepository;
+        this.userService = userService;
     }
 
-    public void add(ResourceDto artist){
-        resourceRepository.save(resourceCreationMapper.toEntity(artist));
+    public List<UserResourceMark> getAllByUser(Integer id) {
+        return userResourceMarkRepository.findResourceMarksByUser(id);
+    }
+
+    public List<ResourceDto> getAllByUserTags(Integer id) {
+        return new ArrayList<>();
+    }
+
+    public ResourceDto getById(Integer id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByLogin(username).get();
+
+        ResourceDto dto = resourceCreationMapper.toDto(resourceRepository.findById(id).orElse(null));
+        List<UserResourceMark> userMark = userResourceMarkRepository.findResourceMarksByUser(user.getUserId());
+        dto.setMark(userMark.get(0).getMark());
+        dto.setFavorite(userMark.get(0).getFavorite());
+        return dto;
+    }
+
+    public void add(ResourceDto resource){
+        resourceRepository.save(resourceCreationMapper.toEntity(resource));
+    }
+
+    public ResourceDto edit(ResourceDto resource) {
+        Resource save = resourceRepository.save(resourceCreationMapper.toEntity(resource));
+        return resourceCreationMapper.toDto(save);
     }
 
     public void delete(Integer id) {
-        resourceRepository.delete(id);
+        Optional<Resource> byId = resourceRepository.findById(id);
+        byId.ifPresent(resourceRepository::delete);
     }
 
-    public List<ResourceDto> getAll(){
-        return resourceCreationMapper.toDto((List<Resource>) resourceRepository.findAll());
+    public List<ResourceDto> getAll(List<Long> tagIds, String name, String type, String state) {
+        return resourceCreationMapper.toDto(resourceRepository.findAll());
     }
 
     public void markResource(Integer id, Integer mark) {
-        resourceMarkRepository.save(new ResourceMark(id, mark));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByLogin(username).get();
+
+        UserResourceMark markEntity = userResourceMarkRepository.findResourceMarkByUserAndResource(user.getUserId(), id);
+        if (markEntity != null) {
+            markEntity.setMark(mark);
+            userResourceMarkRepository.save(markEntity);
+        } else {
+            Optional<Resource> resource = resourceRepository.findById(id);
+            userResourceMarkRepository.save(new UserResourceMark(user, resource.get(), mark, false));
+        }
     }
 
-    public List<Statistics> getStatistics() {
-        return statisticsRepository.findAll();
+    public void addOrRemoveResourceFromFavorites(Integer id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByLogin(username).get();
+
+        UserResourceMark mark = userResourceMarkRepository.findResourceMarkByUserAndResource(user.getUserId(), id);
+        mark.setFavorite(!mark.getFavorite());
+    }
+
+    public void changeResourceState(Integer id, ResourceState state) {
+        Optional<Resource> resource = resourceRepository.findById(id);
+        if (resource.isPresent()) {
+            Resource updatedResource = resource.get();
+            updatedResource.setState(state);
+            resourceRepository.save(updatedResource);
+        }
+    }
+
+    public void addTag(Tag tag) {
+        tagRepository.save(tag);
     }
 }

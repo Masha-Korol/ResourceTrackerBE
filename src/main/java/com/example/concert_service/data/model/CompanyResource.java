@@ -9,6 +9,8 @@ public class CompanyResource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private UserAction action;
+    private Integer mark;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -21,12 +23,6 @@ public class CompanyResource {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "action_id")
-    private UserAction action;
-
-    private String mark;
 
     public Integer getId() {
         return id;
@@ -68,11 +64,11 @@ public class CompanyResource {
         this.action = action;
     }
 
-    public String getMark() {
+    public Integer getMark() {
         return mark;
     }
 
-    public void setMark(String mark) {
+    public void setMark(Integer mark) {
         this.mark = mark;
     }
 }
