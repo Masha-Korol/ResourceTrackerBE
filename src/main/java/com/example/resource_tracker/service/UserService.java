@@ -31,11 +31,11 @@ public class UserService {
         this.authorizationRoleRepository = authorizationRoleRepository;
     }
 
-    public User get(Integer id) {
-        return (User) userRepository.findById(id);
+    public UserDto get(Integer id) {
+        return (UserDto) userRepository.findById(id);
     }
 
-    public User getInfo(Integer id) {
+    public UserDto getInfo(Integer id) {
         Optional<User> byId = userRepository.findById(id);
         if (byId.isPresent()) {
             byId.resources = resourceService.getAllByUser(id);
@@ -44,8 +44,8 @@ public class UserService {
         return null;
     }
 
-    public List<User> getAll() {
-        return (List<User>) userRepository.findAll();
+    public List<UserDto> getAll() {
+        return (List<UserDto>) userRepository.findAll();
     }
 
     public void addUser(UserDto dto) {
@@ -96,7 +96,7 @@ public class UserService {
         }
     }
 
-    public Optional<User> findByLogin(String username) {
+    public Optional<UserDto> findByLogin(String username) {
         return userRepository.findByLogin(username);
     }
 }

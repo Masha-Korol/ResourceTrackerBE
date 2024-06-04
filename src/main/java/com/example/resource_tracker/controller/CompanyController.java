@@ -15,12 +15,12 @@ public class CompanyController {
     }
 
     @PostMapping("/")
-    public void add(@RequestBody Company company) {
+    public CompanyDto add(@RequestBody CompanyDto company) {
         companyService.add(company);
     }
 
     @PutMapping("/")
-    public void edit(@RequestBody Company company) {
+    public CompanyDto edit(@RequestBody CompanyDto company) {
         companyService.add(company);
     }
 

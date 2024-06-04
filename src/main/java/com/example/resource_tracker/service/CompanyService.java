@@ -13,8 +13,8 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public void add(Company company) {
-        companyRepository.save(company);
+    public CompanyDto add(CompanyDto company) {
+        return companyRepository.save(company);
     }
 
     public void delete(Integer id) {

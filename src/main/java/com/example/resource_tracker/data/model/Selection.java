@@ -10,7 +10,7 @@ public class Selection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer selectionId;
+    private Integer id;
     private String name;
     private String description;
 
@@ -22,12 +22,12 @@ public class Selection {
     )
     private List<Resource> resources;
 
-    public Integer getSelectionId() {
-        return selectionId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setSelectionId(Integer selectionId) {
-        this.selectionId = selectionId;
+    public void setId(Integer selectionId) {
+        this.id = selectionId;
     }
 
     public String getName() {
@@ -59,11 +59,11 @@ public class Selection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Selection selection = (Selection) o;
-        return Objects.equals(selectionId, selection.selectionId) && Objects.equals(name, selection.name) && Objects.equals(description, selection.description) && Objects.equals(resources, selection.resources);
+        return Objects.equals(id, selection.id) && Objects.equals(name, selection.name) && Objects.equals(description, selection.description) && Objects.equals(resources, selection.resources);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(selectionId, name, description, resources);
+        return Objects.hash(id, name, description, resources);
     }
 }

@@ -24,10 +24,10 @@ public class CFService {
     }
 
     public List<Resource> getRecommendations(User currentUser) {
-        List<UserResourceMark> userMarks = userResourceMarkRepository.findResourceMarksByUser(currentUser.getUserId());
+        List<UserResourceMark> userMarks = userResourceMarkRepository.findResourceMarksByUser(currentUser.getId());
         List<Integer> markedResources = userMarks.stream().map(userResourceMark -> userResourceMark.getResource().getId()).collect(Collectors.toList());
 
-        List<Integer> recommendations = brismfService.getTopFiveUserPredictions(currentUser.getUserId(), markedResources);
+        List<Integer> recommendations = brismfService.getTopFiveUserPredictions(currentUser.getId(), markedResources);
         return recommendations.stream().map(resourceId -> resourceRepository.findById(resourceId).get()).collect(Collectors.toList());
     }
 }

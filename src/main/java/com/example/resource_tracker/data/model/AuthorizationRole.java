@@ -9,18 +9,18 @@ public class AuthorizationRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer roleId;
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 100)
     private ERoleType roleName;
 
-    public Integer getRoleId() {
-        return roleId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setId(Integer roleId) {
+        this.id = roleId;
     }
 
     public ERoleType getRoleName() {
@@ -47,7 +47,7 @@ public class AuthorizationRole {
     @Override
     public String toString() {
         return "AuthorizationRole{" +
-                "roleId=" + roleId +
+                "roleId=" + id +
                 ", roleName=" + roleName +
                 '}';
     }

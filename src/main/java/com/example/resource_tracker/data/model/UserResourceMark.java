@@ -9,6 +9,8 @@ public class UserResourceMark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer mark;
+    private Boolean isFavorite;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -17,9 +19,6 @@ public class UserResourceMark {
     @ManyToOne
     @JoinColumn(name = "resource_id")
     private Resource resource;
-
-    private Integer mark;
-    private Boolean isFavorite;
 
     public UserResourceMark(User user, Resource resource, Integer mark, Boolean isFavorite) {
         this.user = user;

@@ -13,7 +13,7 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public void addComment(Comment comment) {
+    public CommentDto addComment(CommentDto comment) {
         commentRepository.save(comment);
     }
 }

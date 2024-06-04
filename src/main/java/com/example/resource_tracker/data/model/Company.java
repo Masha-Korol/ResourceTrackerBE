@@ -8,16 +8,16 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer companyId;
+    private Integer id;
     private String companyName;
     private String companyDescription;
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setId(Integer companyId) {
+        this.id = companyId;
     }
 
     public String getCompanyName() {

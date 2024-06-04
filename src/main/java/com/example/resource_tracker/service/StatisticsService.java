@@ -26,8 +26,8 @@ public class StatisticsService {
         this.userRepository = userRepository;
     }
 
-    public List<Statistics> getAll() {
-        return (List<Statistics>) statisticsRepository.findAll();
+    public List<StatisticsDto> getAll() {
+        return (List<StatisticsDto>) statisticsRepository.findAll();
     }
 
     public void add(StatActionDto statActionDto) {

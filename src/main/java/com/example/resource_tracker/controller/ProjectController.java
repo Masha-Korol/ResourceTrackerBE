@@ -15,7 +15,7 @@ public class ProjectController {
     }
 
     @GetMapping("/")
-    public List<Project> getAll() {
+    public List<ProjectDto> getAll() {
         return projectService.getAll();
     }
 
@@ -25,12 +25,12 @@ public class ProjectController {
     }
 
     @PostMapping("/")
-    public Project add(@RequestBody Project project) {
+    public ProjectDto add(@RequestBody ProjectDto project) {
         return projectService.save(project);
     }
 
     @PutMapping("/")
-    public Project update(@RequestBody Project project) {
+    public ProjectDto update(@RequestBody ProjectDto project) {
         return projectService.save(project);
     }
 }

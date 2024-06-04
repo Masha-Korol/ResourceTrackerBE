@@ -15,11 +15,11 @@ public class SelectionService {
         this.selectionRepository = selectionRepository;
     }
 
-    public List<Selection> getAll() {
-        return (List<Selection>) selectionRepository.findAll();
+    public List<SelectionDto> getAll() {
+        return (List<SelectionDto>) selectionRepository.findAll();
     }
 
-    public Selection save(Selection selection) {
+    public SelectionDto save(SelectionDto selection) {
         return selectionRepository.save(selection);
     }
 

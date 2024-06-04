@@ -9,15 +9,15 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tagId;
+    private Integer id;
     private String tagName;
 
-    public Integer getTagId() {
-        return tagId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTagId(Integer tagId) {
-        this.tagId = tagId;
+    public void setId(Integer tagId) {
+        this.id = tagId;
     }
 
     public String getTagName() {
@@ -33,11 +33,11 @@ public class Tag {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tag tag = (Tag) o;
-        return Objects.equals(tagId, tag.tagId) && Objects.equals(tagName, tag.tagName);
+        return Objects.equals(id, tag.id) && Objects.equals(tagName, tag.tagName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tagId, tagName);
+        return Objects.hash(id, tagName);
     }
 }

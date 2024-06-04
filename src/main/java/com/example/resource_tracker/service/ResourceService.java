@@ -29,7 +29,7 @@ public class ResourceService {
         this.userService = userService;
     }
 
-    public List<UserResourceMark> getAllByUser(Integer id) {
+    public List<UserResourceMarkDto> getAllByUser(Integer id) {
         return userResourceMarkRepository.findResourceMarksByUser(id);
     }
 
@@ -42,13 +42,13 @@ public class ResourceService {
         User user = userService.findByLogin(username).get();
 
         ResourceDto dto = resourceCreationMapper.toDto(resourceRepository.findById(id).orElse(null));
-        List<UserResourceMark> userMark = userResourceMarkRepository.findResourceMarksByUser(user.getUserId());
+        List<UserResourceMark> userMark = userResourceMarkRepository.findResourceMarksByUser(user.getId());
         dto.setMark(userMark.get(0).getMark());
         dto.setFavorite(userMark.get(0).getFavorite());
         return dto;
     }
 
-    public ResourceDto add(ResourceDto resource){
+    public ResourceDto add(ResourceDto resource) {
         return resourceRepository.save(resourceCreationMapper.toEntity(resource));
     }
 
@@ -70,7 +70,7 @@ public class ResourceService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByLogin(username).get();
 
-        UserResourceMark markEntity = userResourceMarkRepository.findResourceMarkByUserAndResource(user.getUserId(), id);
+        UserResourceMark markEntity = userResourceMarkRepository.findResourceMarkByUserAndResource(user.getId(), id);
         if (markEntity != null) {
             markEntity.setMark(mark);
             userResourceMarkRepository.save(markEntity);
@@ -84,7 +84,7 @@ public class ResourceService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByLogin(username).get();
 
-        UserResourceMark mark = userResourceMarkRepository.findResourceMarkByUserAndResource(user.getUserId(), id);
+        UserResourceMark mark = userResourceMarkRepository.findResourceMarkByUserAndResource(user.getId(), id);
         mark.setFavorite(!mark.getFavorite());
     }
 
@@ -97,7 +97,7 @@ public class ResourceService {
         }
     }
 
-    public void addTag(Tag tag) {
+    public void addTag(TagDto tag) {
         tagRepository.save(tag);
     }
 }

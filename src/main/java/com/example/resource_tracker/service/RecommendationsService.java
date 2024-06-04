@@ -47,8 +47,8 @@ public class RecommendationsService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByLogin(username).get();
 
-        List<Statistics> companyResourcesByCompany = statisticsService.findCompanyResourcesByCompany(user.getCompany().getCompanyId());
-        List<UserResourceMark> resourceMarksByUser = userResourceMarkRepository.findResourceMarksByUser(user.getUserId());
+        List<Statistics> companyResourcesByCompany = statisticsService.findCompanyResourcesByCompany(user.getCompany().getId());
+        List<UserResourceMark> resourceMarksByUser = userResourceMarkRepository.findResourceMarksByUser(user.getId());
         List<Integer> filteredMarks = resourceMarksByUser.stream().map(userResourceMark -> userResourceMark.getResource().getId()).collect(Collectors.toList());
 
         List<Statistics> companyResources = companyResourcesByCompany.stream().filter(companyResource -> !filteredMarks.contains(companyResource.getResource().getId())).collect(Collectors.toList());
