@@ -34,7 +34,7 @@ public class AuthController {
 	UserService userService;
 
 	@Autowired
-  PasswordEncoder encoder;
+	PasswordEncoder encoder;
 
 	@Autowired
 	JwtUtils jwtUtils;

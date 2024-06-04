@@ -18,17 +18,17 @@ public class SelectionController {
     }
 
     @GetMapping("/")
-    public List<Selection> getAll(){
+    public List<SelectionDto> getAll(){
         return selectionService.getAll();
     }
 
     @PostMapping("/")
-    public Selection add(@RequestBody Selection selection) {
+    public SelectionDto add(@RequestBody SelectionDto selection) {
         return selectionService.save(selection);
     }
 
     @PutMapping("/")
-    public Selection edit(@RequestBody Selection selection) {
+    public SelectionDto edit(@RequestBody SelectionDto selection) {
         return selectionService.save(selection);
     }
 

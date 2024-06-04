@@ -11,10 +11,15 @@ public class Statistics {
     private Integer id;
     private Long timestamp;
     private UserAction action;
+    private Integer mark;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "compabyId")
+    private Company company;
 
     @ManyToOne
     @JoinColumn(name = "resource_id")
@@ -28,6 +33,22 @@ public class Statistics {
     }
 
     public Statistics() {}
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Integer getMark() {
+        return mark;
+    }
+
+    public void setMark(Integer mark) {
+        this.mark = mark;
+    }
 
     public Integer getId() {
         return id;

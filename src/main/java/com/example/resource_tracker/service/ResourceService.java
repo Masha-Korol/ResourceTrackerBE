@@ -48,8 +48,8 @@ public class ResourceService {
         return dto;
     }
 
-    public void add(ResourceDto resource){
-        resourceRepository.save(resourceCreationMapper.toEntity(resource));
+    public ResourceDto add(ResourceDto resource){
+        return resourceRepository.save(resourceCreationMapper.toEntity(resource));
     }
 
     public ResourceDto edit(ResourceDto resource) {

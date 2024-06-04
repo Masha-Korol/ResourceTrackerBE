@@ -43,13 +43,13 @@ public class ResourceController {
     }
 
     @PostMapping("/")
-    public void addComment(@RequestBody Comment comment){
+    public void addComment(@RequestBody CommentDto comment){
         commentService.addComment(comment);
     }
 
     @PostMapping("/")
-    public void add(@RequestBody ResourceDto artist){
-        resourceService.add(artist);
+    public ResourceDto add(@RequestBody ResourceDto resource){
+        resourceService.add(resource);
     }
 
     @DeleteMapping("/{id}")

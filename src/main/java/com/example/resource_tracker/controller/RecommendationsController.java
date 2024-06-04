@@ -18,17 +18,17 @@ public class RecommendationsController {
     }
 
     @GetMapping("/user")
-    public List<Resource> getRecommendationsForUser(){
+    public List<ResourceDto> getRecommendationsForUser(){
         return recommendationsService.getRecommendationsForUser();
     }
 
     @GetMapping("/resource/{id}")
-    public List<Resource> getSimilarToResource(@PathVariable Integer id) {
+    public List<ResourceDto> getSimilarToResource(@PathVariable Integer id) {
         return recommendationsService.getSimilarToResource(id);
     }
 
     @GetMapping("/company")
-    public List<ResourceCompanyRecommendation> getRecommendationsByCompany(){
+    public List<ResourceCompanyRecommendationDto> getRecommendationsByCompany() {
         return recommendationsService.getRecommendationsByCompany();
     }
 }
