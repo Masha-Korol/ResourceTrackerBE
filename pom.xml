@@ -5,9 +5,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
-	<artifactId>concert_service</artifactId>
+	<artifactId>resource_tracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>concert_service</name>
+	<name>resource_tracker</name>
 
 	<properties>
 		<java.version>11</java.version>
