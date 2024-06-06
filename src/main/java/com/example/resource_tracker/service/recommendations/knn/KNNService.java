@@ -54,11 +54,16 @@ public class KNNService {
     }
 
     private List<Integer> getSimilarResources(ResourceWithTagsBinary targetResource, List<ResourceWithTagsBinary> normalizedData) {
-        PriorityQueue<ResourceSimilarity> queue = new PriorityQueue<>(Comparator.comparingDouble(ResourceSimilarity::getSimilarity).reversed());
+        PriorityQueue<ResourceSimilarity> queue = new PriorityQueue<>(5, Comparator.comparingDouble(ResourceSimilarity::getSimilarity).reversed());
 
         for (ResourceWithTagsBinary resource : normalizedData) {
             double similarity = getCosineSimilarity(targetResource, resource);
-            queue.add(new ResourceSimilarity(resource, similarity));
+            if (queue.size() < 5) {
+                queue.offer(new ResourceSimilarity(resource, similarity));
+            } else if (similarity > queue.peek().getSimilarity()) {
+                queue.poll();
+                queue.offer(new ResourceSimilarity(resource, similarity));
+            }
         }
 
         List<Integer> topResources = new ArrayList<>();
