@@ -30,6 +30,14 @@ public class Resource {
     @JoinColumn(name = "comment_id")
     private List<Comment> comments;
 
+    public Resource(String name, ResourceType type, String link, ResourceState state, Set<Tag> tags) {
+        this.name = name;
+        this.type = type;
+        this.link = link;
+        this.state = state;
+        this.tags = tags;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }

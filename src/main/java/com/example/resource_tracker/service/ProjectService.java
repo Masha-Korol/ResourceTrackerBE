@@ -1,6 +1,5 @@
 package com.example.resource_tracker.service;
 
-import com.example.resource_tracker.data.model.Project;
 import com.example.resource_tracker.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +14,15 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public List<Project> getAll() {
-        return (List<Project>) projectRepository.findAll();
+    public List<ProjectDto> getAll() {
+        return (List<ProjectDto>) projectRepository.findAll();
     }
 
     public void delete(Integer id) {
         projectRepository.delete(projectRepository.findById(id).get());
     }
 
-    public Project save(Project project) {
+    public ProjectDto save(ProjectDto project) {
         return projectRepository.save(project);
     }
 }
