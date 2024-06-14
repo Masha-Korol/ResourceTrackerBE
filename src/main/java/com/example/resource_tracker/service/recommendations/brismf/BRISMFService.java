@@ -19,7 +19,7 @@ public class BRISMFService {
 
     private GradientDescent train() {
         Double[][] sourceData = new Double[1000][1000];
-        // рандомно заполняем матрицу оценок
+        // случайным образом заполняем матрицу оценок
         SecureRandom random = new SecureRandom();
         List<Double> possibleMarks = Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0, null);
         for (int u = 0; u < 1000; u++) {
